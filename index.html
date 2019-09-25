@@ -1,0 +1,190 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <title>Sliding Puzzle</title>
+  <style>
+    body {
+      background: url("puzim.jpg");
+      padding-top: 5em;
+    }
+
+    .tile1,
+    .tile2,
+    .tile3,
+    .tile4,
+    .tile5,
+    .tile6,
+    .tile7,
+    .tile8,
+    .tile9 {
+      display: table-cell;
+      width: 10em;
+      height: 10em;
+      border: 1px solid white;
+      cursor: pointer;
+    }
+
+    .tile1 {
+      background-position: left top;
+    }
+
+    .tile2 {
+      background-position: center top;
+    }
+
+    .tile3 {
+      background-position: right top;
+    }
+
+    .tile4 {
+      background-position: left center;
+    }
+
+    .tile5 {
+      background-position: center center;
+    }
+
+    .tile6 {
+      background-position: right center;
+    }
+
+    .tile7 {
+      background-position: left bottom;
+    }
+
+    .tile8 {
+      background-position: center bottom;
+    }
+
+    .tile9 {
+      background: white;
+      cursor: default;
+    }
+
+    #table {
+      margin: auto;
+    }
+
+    .a1 {
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="a1">
+
+    <div id="table" style="display: table;">
+      <div id="row1" style="display: table-row;">
+        <div id="cell11" class="tile1" onClick="clickTile(1,1);">
+          <h1 id="a1" style="color:#85EB6A">1</h1>
+        </div>
+        <div id="cell12" class="tile2" onClick="clickTile(1,2);">
+          <h1 id="a2" style="color:#85EB6A">3</h1>
+        </div>
+        <div id="cell13" class="tile3" onClick="clickTile(1,3);">
+          <h1 id="a3" style="color:#85EB6A">5</h1>
+        </div>
+      </div>
+      <div id="row2" style="display: table-row;">
+        <div id="cell21" class="tile4" onClick="clickTile(2,1);">
+          <h1 id="a4" style="color:#85EB6A">7</h1>
+        </div>
+        <div id="cell22" class="tile5" onClick="clickTile(2,2);">
+          <h1 id="a5" style="color:#85EB6A">4</h1>
+        </div>
+        <div id="cell23" class="tile6" onClick="clickTile(2,3);">
+          <h1 id="a6" style="color:#85EB6A">2</h1>
+        </div>
+      </div>
+      <div id="row3" style="display: table-row;">
+        <div id="cell31" class="tile7" onClick="clickTile(3,1);">
+          <h1 id="a7" style="color:#85EB6A">8</h1>
+        </div>
+        <div id="cell32" class="tile8" onClick="clickTile(3,2);">
+          <h1 id="a8" style="color:#85EB6A">6</h1>
+        </div>
+        <div id="cell33" class="tile9" onClick="clickTile(3,3);">
+          <h1 id="a9"></h1>
+        </div>
+      </div>
+    </div>
+    <script>
+     function swapTiles(cell1, cell2) {
+        var temp = document.getElementById(cell1).className;
+        document.getElementById(cell1).className = document.getElementById(cell2).className;
+        document.getElementById(cell2).className = temp;
+      }
+      function swapTiles1(cell1, cell2) {
+        var temp = document.getElementById(cell1).innerHTML;
+        document.getElementById(cell1).innerHTML = document.getElementById(cell2).innerHTML;
+        document.getElementById(cell2).innerHTML = temp;
+      }
+
+      function shuffle() {
+
+        for (var row = 1; row <= 3; row++) {
+          for (var column = 1; column <= 3; column++) {
+
+            var row2 = Math.floor(Math.random() * 3 + 1);
+            var column2 = Math.floor(Math.random() * 3 + 1);
+
+            swapTiles("cell" + row + column, "cell" + row2 + column2);
+            swapTiles1("cell" + row + column, "cell" + row2 + column2);
+
+
+          }
+        }
+      }
+
+      
+
+      function clickTile(row, column) {
+        var cell = document.getElementById("cell" + row + column);
+        var tile = cell.className
+        if (tile != "tile9") {
+          if (column < 3) {
+            if (document.getElementById("cell" + row + (column + 1)).className == "tile9") {
+              swapTiles("cell" + row + column, "cell" + row + (column + 1));
+              swapTiles1("cell" + row + column, "cell" + row + (column + 1));
+
+              return;
+            }
+          }
+          if (column > 1) {
+            if (document.getElementById("cell" + row + (column - 1)).className == "tile9") {
+              swapTiles("cell" + row + column, "cell" + row + (column - 1));
+              swapTiles1("cell" + row + column, "cell" + row + (column - 1));
+
+              return;
+            }
+          }
+          if (row > 1) {
+            if (document.getElementById("cell" + (row - 1) + column).className == "tile9") {
+              swapTiles("cell" + row + column, "cell" + (row - 1) + column);
+              swapTiles1("cell" + row + column, "cell" + (row - 1) + column);
+
+              return;
+            }
+          }
+
+          if (row < 3) {
+            if (document.getElementById("cell" + (row + 1) + column).className == "tile9") {
+              swapTiles("cell" + row + column, "cell" + (row + 1) + column);
+              swapTiles1("cell" + row + column, "cell" + (row + 1) + column);
+
+              return;
+            }
+          }
+        }
+      }
+  </script><br>
+
+    <input class="btn btn-primary" type="submit" value="New Game" onClick="shuffle();" />
+  </div>
+</body>
+</html>
